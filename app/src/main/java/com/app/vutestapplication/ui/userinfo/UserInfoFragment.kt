@@ -71,6 +71,7 @@ class UserInfoFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     Log.d("UserList", "data[0]: ${it?.get(0)}")
                     updateList(it)
+                    viewModel.cancelAllRequests()
                 }
             }
         )

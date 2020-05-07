@@ -1,6 +1,7 @@
 package com.app.vutestapplication.services
 
 import com.app.vutestapplication.BuildConfig
+import com.app.vutestapplication.services.with_annotations.RetryCallAdapterFactory
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -38,6 +39,7 @@ object ApiFactory {
         .client(client)
         .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RetryCallAdapterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
