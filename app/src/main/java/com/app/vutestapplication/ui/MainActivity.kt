@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.app.vutestapplication.R
+import com.app.vutestapplication.ui.userinfo.UserInfoFragment
 
 class MainActivity : AppCompatActivity() {
 

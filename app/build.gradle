@@ -36,6 +36,12 @@ android {
     }
     kotlinOptions.jvmTarget = '1.8'
 
+    // For roboelectric test env
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
 }
 
 dependencies {
@@ -82,7 +88,22 @@ dependencies {
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
-    testImplementation 'junit:junit:4.12'
+
+    // Required for testing
+    testImplementation 'junit:junit:4.13'
+
+    // Core library
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Mockito (optional)
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+
 }

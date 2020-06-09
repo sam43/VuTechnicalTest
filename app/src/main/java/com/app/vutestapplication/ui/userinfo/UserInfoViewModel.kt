@@ -8,17 +8,18 @@ import com.app.vutestapplication.utils.BaseViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class UserInfoViewModel : BaseViewModel() {
+open class UserInfoViewModel(private val repo: UserRepo) : BaseViewModel() {
 
-    private val repository: UserRepo = UserRepo(ApiFactory.service)
-    val usersLiveData = MutableLiveData<MutableList<Data?>>()
+    open val usersLiveData = MutableLiveData<MutableList<Data?>>()
 
     fun fetchUsers(pageNo: Int) {
         scope.launch {
-            val users = repository.getUsersInfo(pageNo)
+            val users = repo.getUsersInfo(pageNo)
             usersLiveData.postValue(users)
         }
     }
+
+    open fun isUserListNull(): Boolean = usersLiveData.value != null
 
     fun cancelAllRequests() = coroutineContext.cancel()
 }

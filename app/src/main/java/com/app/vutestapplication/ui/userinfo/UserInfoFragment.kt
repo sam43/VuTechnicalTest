@@ -1,5 +1,6 @@
 package com.app.vutestapplication.ui.userinfo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.app.vutestapplication.R
 import com.app.vutestapplication.models.Data
+import com.app.vutestapplication.repositories.UserRepo
+import com.app.vutestapplication.services.ApiFactory
+import com.app.vutestapplication.testing.TestingActivity
 import com.app.vutestapplication.utils.RecyclerAdapterUtil
 import com.app.vutestapplication.utils.getViewModel
 import com.app.vutestapplication.utils.loadUserAvatar
@@ -25,13 +29,18 @@ import java.io.Serializable
 
 class UserInfoFragment : Fragment() {
 
-    companion object {
-        fun newInstance() =
+    companion object { // will be needed when new instance of this fragment is required
+        fun instance() =
             UserInfoFragment()
     }
 
+    private val repository: UserRepo = UserRepo(ApiFactory.service)
+
     private val viewModel: UserInfoViewModel by lazy {
-        getViewModel<UserInfoViewModel>()
+        getViewModel<UserInfoViewModel> // without type (UserInfoViewModel) will get compile time error
+        {
+            UserInfoViewModel(repository)
+        }
     }
     /*private val viewModel: UserInfoViewModel by lazy {
         ViewModelProvider(this).get(UserInfoViewModel::class.java)
@@ -47,7 +56,17 @@ class UserInfoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupViews()
         viewModel.fetchUsers(1)
+    }
+
+    private fun setupViews() {
+        btnTestActivity.setOnClickListener { startActivity(Intent(activity, TestingActivity::class.java)) }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelAllRequests()
     }
 
     private fun setupLayoutManager() {

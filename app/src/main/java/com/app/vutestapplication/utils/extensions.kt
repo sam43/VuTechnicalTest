@@ -2,6 +2,7 @@ package com.app.vutestapplication.utils
 
 import android.content.Context
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -36,5 +37,7 @@ fun Context.loadUserAvatar(url: String?, holder: ImageView) {
                 .skipMemoryCache(true)
         )
         .into(holder)
-
 }
+
+fun Context.pop(msg: String) =
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

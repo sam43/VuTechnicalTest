@@ -7,7 +7,7 @@ import java.io.IOException
 open class BaseRepository {
     suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, errorMessage: String): T? {
 
-        val result : Result<T> = safeApiResult(call,errorMessage)
+        val result : Result<T> = safeApiResult(call, errorMessage)
         var data : T? = null
 
         when(result) {
@@ -26,6 +26,8 @@ open class BaseRepository {
 
         return Result.Error(IOException("Error Occurred during getting safe Api result, Custom ERROR - $errorMessage"))
     }
+
+    // Higher level ENUM class which can includes multiple data classes or objects
 
     sealed class Result<out T: Any> {
         data class Success<out T : Any>(val data: T) : Result<T>()
